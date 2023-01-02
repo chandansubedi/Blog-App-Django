@@ -3,6 +3,19 @@ from .models import *
 
 # Create your views here.
 
+def user_login(request):
+    return render(request, 'login.html')
+
+def user_register(request):
+    return render(request, 'register.html')
+
+
+def home(request):
+    return render(request, 'home.html')
+
+def show_all_blogs(request):  
+    return render(request,'show_all_blogs.html')
+
 def get_blog(request,id):
     context = {}
     try:
