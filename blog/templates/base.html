@@ -15,7 +15,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-secondary shadow-lg  ">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#"> MY BLOG </a>
+            <a class="navbar-brand" href="/"> MY BLOG </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
                 aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -27,11 +27,16 @@
                     </li>
 
                 </ul>
+                {% if not request.user.is_authenticated  %}
                 <a   href="{% url 'login' %}" class="btn btn-primary   ">Login</a>
-                <a href="{% url 'register' %}" class="btn btn-warning m-2">Register</a>
-                <span class="navbar-text">
-                    website
-                </span>
+                <a href="{% url 'register' %}" class="btn btn-warning m-2 me-4">Register</a>
+                {% else %}  
+                <a   href="{% url 'user_logout' %}" class="btn btn-danger   ">Logout</a>
+                <a href="{% url 'show_all_blogs' %}" class="btn btn-primary m-2 me-4">blogs</a>
+                {% endif %}
+
+                    
+                </span> 
             </div>
         </div>
     </nav>
