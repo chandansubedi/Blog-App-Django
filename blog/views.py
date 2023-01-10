@@ -3,6 +3,7 @@ from .models import *
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
+from .form import *
 
 # Create your views here.
 
@@ -69,7 +70,29 @@ def show_all_blogs(request):
     return render(request,'show_all_blogs.html')
 
 def create_blogs(request):
-    return render(request , 'create_blogs.html') 
+    context = {'form' : BlogForm, "category":Category.objects.all() }
+    if request.method =='POST':
+        form = BlogForm(request.POST)
+        category = request.POST.get('category')
+        title = request.POST.get('title')
+        banner_image = request.FILES['banner_image']
+
+        if form.is_valid():
+            content=form.cleaned_data['content']
+            
+
+            Blog.objects.create(
+                title = title,
+                content = content,
+                category = Category.objects.get(id = category),
+                user = request.user,
+                banner_image = banner_image
+            )
+            messages.success(request, ' blog created successfully')
+            return redirect('/create-blogs/')
+        
+
+    return render(request , 'create_blogs.html',context) 
 
 def update_blogs(request):
     return render(request , 'update_blogs.html')  
